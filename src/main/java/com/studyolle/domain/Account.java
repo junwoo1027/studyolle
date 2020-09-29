@@ -52,12 +52,19 @@ public class Account {
 
     private boolean studyUpdateByWeb;
 
+    //token 값 생성
     public void generateEmailCheckToken() {
         this.emailCheckToken = UUID.randomUUID().toString();
     }
 
+    //회원가입 완료
     public void completeSignUp() {
-        this.emailVerified = true;
-        this.joinedAt = LocalDateTime.now();
+        this.emailVerified = true; //이메일 인증 true 변경
+        this.joinedAt = LocalDateTime.now(); //가입날짜 현재 날짜로
+    }
+
+    //token 값이 맞는지 확인
+    public boolean isValidToken(String token) {
+        return this.emailCheckToken.equals(token);
     }
 }
