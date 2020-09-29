@@ -89,7 +89,7 @@
             </form>
         </div>
 
-        <footer th:fragment="footer">
+        <footer>
             <div class="row justify-content-center">
                 <img class="mb-2" src="/images/long.png" alt="" width="100">
                 <small class="d-block mb-3 text-muted">&copy; 2020</small>
@@ -105,7 +105,7 @@
 
         window.addEventListener('load', function () {
 
-            var forms = document.getElementsByClassName('needs-validation')
+            var forms = document.getElementsByClassName('needs-validation') //form 가져와서 유효성체
 
             Array.prototype.filter.call(forms, function (form) {
                 form.addEventListener('submit', function (event) {
