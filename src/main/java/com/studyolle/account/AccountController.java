@@ -1,9 +1,6 @@
 package com.studyolle.account;
 
-import com.studyolle.domain.Account;
 import lombok.RequiredArgsConstructor;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -18,13 +15,13 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class AccountController {
 
-    private final SignupFormValidator signupFormValidator;
+    private final SignUpFormValidator signUpFormValidator;
 
     private final AccountService accountService;
 
-    @InitBinder("signUPForm")
+    @InitBinder("signUpForm")
     public void initBinder(WebDataBinder webDataBinder) {
-        webDataBinder.addValidators(signupFormValidator);
+        webDataBinder.addValidators(signUpFormValidator);
     }
 
     @GetMapping("/sign-up")

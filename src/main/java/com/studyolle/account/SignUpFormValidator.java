@@ -7,9 +7,9 @@ import org.springframework.validation.Validator;
 
 @Component
 @RequiredArgsConstructor
-public class SignupFormValidator implements Validator {
+public class SignUpFormValidator implements Validator {
 
-    private AccountRepository accountRepository;
+    private final AccountRepository accountRepository;
 
     @Override
     public boolean supports(Class<?> aClass) {
