@@ -24,7 +24,7 @@ public class AccountController {
 
     private final AccountRepository accountRepository;
 
-    @InitBinder("signUpForm")
+    @InitBinder("signUpForm")//signUpSubmit @valid의 SignUpForm 클래스이름 카멜케이스로 매칭
     public void initBinder(WebDataBinder webDataBinder) {
         webDataBinder.addValidators(signUpFormValidator);
     }
