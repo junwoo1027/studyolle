@@ -4,6 +4,7 @@ import lombok.*;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -51,10 +52,12 @@ public class Account {
     private boolean studyUpdateByEmail;
 
     private boolean studyUpdateByWeb;
+    private LocalDateTime emailCheckTokenGeneratedAt;
 
     //token 값 생성
     public void generateEmailCheckToken() {
         this.emailCheckToken = UUID.randomUUID().toString();
+        this.emailCheckTokenGeneratedAt = LocalDateTime.now();
     }
 
     //회원가입 완료
@@ -66,5 +69,10 @@ public class Account {
     //token 값이 맞는지 확인
     public boolean isValidToken(String token) {
         return this.emailCheckToken.equals(token);
+    }
+
+    //이메일 재전송 시간 체크
+    public boolean canSendConfirmEmail() {
+        return this.emailCheckTokenGeneratedAt.isBefore(LocalDateTime.now().minusHours(1));
     }
 }

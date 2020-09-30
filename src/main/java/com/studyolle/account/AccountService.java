@@ -45,7 +45,7 @@ public class AccountService {
         return newAccount;
     }
 
-    private void sendSignUpConfirmEmail(Account newAccount) {
+    public void sendSignUpConfirmEmail(Account newAccount) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setSubject("스터디올래, 회원가입 인증");
         mailMessage.setText("/check-email-token?token=" + newAccount.getEmailCheckToken() +
