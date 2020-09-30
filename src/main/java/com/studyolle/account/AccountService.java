@@ -56,7 +56,7 @@ public class AccountService {
 
     public void login(Account account) { //로그인
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-                account.getNickname(),
+                new UserAccount(account),
                 account.getPassword(),
                 List.of(new SimpleGrantedAuthority("ROLE_USER"))); //로그인 시 닉네임, 비밀번호, 권한목록리스트(ROLE_USER)으로 token 생성
 
