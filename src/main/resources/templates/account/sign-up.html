@@ -55,27 +55,25 @@
 
         <div th:replace="fragments.html :: footer"></div>
     </div>
-    <script src="/node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-<script type="application/javascript">
-    (function () {
-        'use strict';
+    <script type="application/javascript">
+        (function () {
+            'use strict';
 
-        window.addEventListener('load', function () {
+            window.addEventListener('load', function () {
 
-            var forms = document.getElementsByClassName('needs-validation') //form 가져와서 유효성체
+                var forms = document.getElementsByClassName('needs-validation') //form 가져와서 유효성체
 
-            Array.prototype.filter.call(forms, function (form) {
-                form.addEventListener('submit', function (event) {
-                    if(form.checkValidity() === false) {
-                        event.preventDefault()
-                        event.stopPropagation()
-                    }
-                    form.classList.add('was-validated')
-                }, false)
-            })
-        }, false)
-    }())
-</script>
+                Array.prototype.filter.call(forms, function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if(form.checkValidity() === false) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+            }, false)
+        }())
+    </script>
 </body>
 </html>
