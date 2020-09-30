@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
+
 @Controller
 @RequiredArgsConstructor
 public class SettingsController {
@@ -26,11 +28,11 @@ public class SettingsController {
     }
 
     @PostMapping("/settings/profile")
-    public String updateProfile(@CurrentUser Account account, Profile profile, Errors errors,
+    public String updateProfile(@CurrentUser Account account, @Valid Profile profile, Errors errors,
                                 Model model, RedirectAttributes attributes) {
         if (errors.hasErrors()) {
             model.addAttribute(account);
-            return "/settings/profile";
+            return "settings/profile";
         }
 
         accountService.updateProfile(account, profile);
