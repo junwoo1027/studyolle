@@ -24,9 +24,16 @@ public class SettingsController {
 
     private final ModelMapper modelMapper;
 
+    private final NicknameValidator nicknameValidator;
+
     @InitBinder("passwordForm")
-    public void initBinder(WebDataBinder webDataBinder) {
+    public void passwordFormInitBinder(WebDataBinder webDataBinder) {
         webDataBinder.addValidators(new PasswordFormValidator());
+    }
+
+    @InitBinder("nicknameForm")
+    public void nicknameFormInitBinder(WebDataBinder webDataBinder) {
+        webDataBinder.addValidators(nicknameValidator);
     }
 
 
@@ -82,12 +89,32 @@ public class SettingsController {
     public String updateNotifications(@CurrentUser Account account, @Valid Notifications notifications, Errors errors,
                                       Model model, RedirectAttributes attributes) {
         if (errors.hasErrors()) {
-            model.addAttribute(attributes);
+            model.addAttribute(account);
             return "settings/notifications";
         }
 
         accountService.updateNotifications(account, notifications);
         attributes.addFlashAttribute("message", "알림을 설정을 변경했습니다.");
         return "redirect:" + "/settings/notifications";
+    }
+
+    @GetMapping("/settings/account")
+    public String updateAccountForm(@CurrentUser Account account, Model model) {
+        model.addAttribute(account);
+        model.addAttribute(modelMapper.map(account, NicknameForm.class));
+        return "settings/account";
+    }
+
+    @PostMapping("/settings/account")
+    public String updateAccount(@CurrentUser Account account, @Valid NicknameForm nicknameForm, Errors errors,
+                                Model model, RedirectAttributes attributes) {
+        if (errors.hasErrors()) {
+            model.addAttribute(account);
+            return "settings/account";
+        }
+
+        accountService.updateAccount(account, nicknameForm);
+        attributes.addFlashAttribute("message", "닉네임을 수정했습니다.");
+        return "redirect:" + "/settings/account";
     }
 }
