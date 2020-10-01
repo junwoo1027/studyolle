@@ -155,4 +155,42 @@ class SettingsControllerTest {
 //        assertEquals(true, junwoo1027.isStudyEnrollmentResultByWeb());
 //        assertEquals(true, junwoo1027.isStudyUpdatedByWeb());
     }
+
+    @WithAccount("junwoo1027")
+    @DisplayName("닉네임 수정 폼")
+    @Test
+    void updateAccountForm() throws Exception {
+        mockMvc.perform(get("/settings/account"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("account"))
+                .andExpect(model().attributeExists("nicknameForm"));
+
+    }
+
+    @WithAccount("junwoo1027")
+    @DisplayName("닉네 수정하기 - 입력값 정상")
+    @Test
+    void updateAccount() throws Exception {
+        mockMvc.perform(post("/settings/account")
+                .param("nickname", "junwoo")
+                .with(csrf()))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/settings/account"))
+                .andExpect(flash().attributeExists("message"));
+
+        assertNotNull(accountRepository.findByNickname("junwoo"));
+    }
+
+    @WithAccount("junwoo1027")
+    @DisplayName("닉네임 수정하기 - 입력값 에러")
+    @Test
+    void updateAccount_error() throws Exception {
+        mockMvc.perform(post("/settings/account")
+                .param("nickname", "123**")
+                .with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(view().name("settings/account"))
+                .andExpect(model().attributeExists("account"))
+                .andExpect(model().attributeExists("nicknameForm"));
+    }
 }
