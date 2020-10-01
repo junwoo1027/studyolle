@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +28,9 @@ class SettingsControllerTest {
 
     @Autowired
     AccountRepository accountRepository;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @AfterEach
     void afterEach() {
@@ -76,5 +80,46 @@ class SettingsControllerTest {
 
         Account junwoo1027 = accountRepository.findByNickname("junwoo1027");
         assertNull(junwoo1027.getBio());
+    }
+
+    @WithAccount("junwoo1027")
+    @DisplayName("패스워드 수정 폼")
+    @Test
+    void updatePasswordForm() throws Exception {
+        mockMvc.perform(get("/settings/password"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("account"))
+                .andExpect(model().attributeExists("passwordForm"));
+
+    }
+
+    @WithAccount("junwoo1027")
+    @DisplayName("패스워드 수정하기 - 입력값 정상")
+    @Test
+    void updatePassword() throws Exception {
+        mockMvc.perform(post("/settings/password")
+                .param("newPassword", "12341234")
+                .param("newPasswordConfirm", "12341234")
+                .with(csrf()))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/settings/password"))
+                .andExpect(flash().attributeExists("message"));
+
+        Account junwoo1027 = accountRepository.findByNickname("junwoo1027");
+        assertTrue(passwordEncoder.matches("12341234", junwoo1027.getPassword()));
+    }
+
+    @WithAccount("junwoo1027")
+    @DisplayName("패스워드 수정하기 - 입력값 에러 - 페스워드 불일치")
+    @Test
+    void updatePassword_error() throws Exception {
+        mockMvc.perform(post("/settings/password")
+                .param("newPassword", "12341234")
+                .param("newPasswordConfirm", "123412345")
+                .with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(view().name("settings/password"))
+                .andExpect(model().attributeExists("account"))
+                .andExpect(model().attributeExists("passwordForm"));
     }
 }
