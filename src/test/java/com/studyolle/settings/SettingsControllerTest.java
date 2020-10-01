@@ -122,4 +122,37 @@ class SettingsControllerTest {
                 .andExpect(model().attributeExists("account"))
                 .andExpect(model().attributeExists("passwordForm"));
     }
+
+    @WithAccount("junwoo1027")
+    @DisplayName("알림 수정 폼")
+    @Test
+    void updateNotificationsForm() throws Exception {
+        mockMvc.perform(get("/settings/notifications"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("account"))
+                .andExpect(model().attributeExists("notifications"));
+
+    }
+
+    @WithAccount("junwoo1027")
+    @DisplayName("알림 수정하기")
+    @Test
+    void updateNotifications() throws Exception {
+        mockMvc.perform(post("/settings/notifications")
+                .param("studyCreatedByEmail", "true")
+                .param("studyEnrollmentResultByEmail", "true")
+                .param("studyUpdatedByEmail", "true")
+                .with(csrf()))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/settings/notifications"))
+                .andExpect(flash().attributeExists("message"));
+
+        Account junwoo1027 = accountRepository.findByNickname("junwoo1027");
+        assertEquals(true, junwoo1027.isStudyCreatedByEmail());
+        assertEquals(true, junwoo1027.isStudyEnrollmentResultByEmail());
+        assertEquals(true, junwoo1027.isStudyUpdatedByEmail());
+//        assertEquals(true, junwoo1027.isStudyCreatedByWeb());
+//        assertEquals(true, junwoo1027.isStudyEnrollmentResultByWeb());
+//        assertEquals(true, junwoo1027.isStudyUpdatedByWeb());
+    }
 }
