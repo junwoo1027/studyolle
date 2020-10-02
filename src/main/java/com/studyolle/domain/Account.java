@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.*;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -56,7 +57,7 @@ public class Account {
     private LocalDateTime emailCheckTokenGeneratedAt;
 
     @ManyToMany
-    private Set<Tag> tags;
+    private Set<Tag> tags = new HashSet<>();
 
     //token 값 생성
     public void generateEmailCheckToken() {
