@@ -21,7 +21,7 @@ public class StudyFormValidator implements Validator {
     @Override
     public void validate(Object object, Errors errors) {
         StudyForm studyForm = (StudyForm) object;
-        if (studyRepository.findByPath(studyForm.getPath())) {
+        if (studyRepository.existsByPath(studyForm.getPath())) {
             errors.rejectValue("path", "wrong.path", "해당 스터디 경로값을 사용할 수 없습니다.");
         }
     }
