@@ -5,6 +5,8 @@ import lombok.*;
 import org.apache.tomcat.jni.Local;
 
 import javax.persistence.*;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -119,5 +121,17 @@ public class Study {
 
     public boolean isRemovable() {
         return !this.published;
+    }
+
+    public String getEncodePath() {
+        return URLEncoder.encode(path, StandardCharsets.UTF_8);
+    }
+
+    public void addMember(Account account) {
+        this.members.add(account);
+    }
+
+    public void removeMember(Account account) {
+        this.members.remove(account);
     }
 }
