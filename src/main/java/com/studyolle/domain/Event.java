@@ -1,5 +1,6 @@
 package com.studyolle.domain;
 
+import com.studyolle.account.UserAccount;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -46,4 +47,36 @@ public class Event {
 
     @Enumerated(EnumType.STRING)
     private EventType eventType;
+
+    public boolean isEnrollableFor(UserAccount userAccount) {
+        return isNotClosed() && !isAttended(userAccount) && !isAlreadyEnrolled(userAccount);
+    }
+
+    public boolean isDisenrollableFor(UserAccount userAccount) {
+        return isNotClosed() && !isAttended(userAccount) && isAlreadyEnrolled(userAccount);
+    }
+
+    private boolean isNotClosed() {
+        return this.endEnrollmentDateTime.isAfter(LocalDateTime.now());
+    }
+
+    public boolean isAttended(UserAccount userAccount) {
+        Account account = userAccount.getAccount();
+        for (Enrollment e : this.enrollments) {
+            if (e.getAccount().equals(account) && e.isAttended()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isAlreadyEnrolled(UserAccount userAccount) {
+        Account account = userAccount.getAccount();
+        for (Enrollment e : this.enrollments) {
+            if (e.getAccount().equals(account)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
