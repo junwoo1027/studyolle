@@ -44,5 +44,6 @@ public class Event {
     @OneToMany(mappedBy = "event")
     private List<Enrollment> enrollments;
 
+    @Enumerated(EnumType.STRING)
     private EventType eventType;
 }
