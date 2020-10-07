@@ -29,7 +29,7 @@ public class Notification {
     @ManyToOne
     private Account account;
 
-    private LocalDateTime createdLocalDateTime;
+    private LocalDateTime createdDateTime;
 
     private NotificationType notificationType;
 }
