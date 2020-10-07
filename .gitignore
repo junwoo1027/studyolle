@@ -35,3 +35,6 @@ build/
 ### Node ###
 src/main/resources/static/node_modules
 src/main/resources/static/node
+
+### dev.properties ###
+src/main/resources/application-dev.properties

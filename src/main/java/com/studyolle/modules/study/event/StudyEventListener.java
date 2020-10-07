@@ -59,7 +59,7 @@ public class StudyEventListener {
         Study study = studyRepository.findStudyWithMangersAndMembersById(studyUpdateEvent.getStudy().getId());
         Set<Account> accounts = new HashSet<>();
         accounts.addAll(study.getManagers());
-        accounts.addAll(study.getManagers());
+        accounts.addAll(study.getMembers());
 
         accounts.forEach(account -> {
             if (account.isStudyUpdatedByEmail()) {

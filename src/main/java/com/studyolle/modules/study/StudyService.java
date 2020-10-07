@@ -113,11 +113,6 @@ public class StudyService {
         this.eventPublisher.publishEvent(new StudyCreatedEvent(study));
     }
 
-    public void close(Study study) {
-        study.close();
-        eventPublisher.publishEvent(new StudyUpdateEvent(study, "스터디를 종료했습니다."));
-    }
-
     public void startRecruit(Study study) {
         study.startRecruit();
         eventPublisher.publishEvent(new StudyUpdateEvent(study, "팀원 모집을 시작합니다."));
@@ -131,6 +126,7 @@ public class StudyService {
     public void closeAndStopRecruit(Study study) {
         study.close();
         study.stopRecruit();
+        eventPublisher.publishEvent(new StudyUpdateEvent(study, "스터디를 종료했습니다."));
     }
 
     public boolean isValidPath(String newPath) {
