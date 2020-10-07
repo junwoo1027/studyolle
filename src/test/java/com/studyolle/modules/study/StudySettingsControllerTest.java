@@ -5,22 +5,17 @@ import com.studyolle.modules.account.AccountFactory;
 import com.studyolle.modules.account.AccountRepository;
 import com.studyolle.modules.account.WithAccount;
 import com.studyolle.modules.account.Account;
-import lombok.RequiredArgsConstructor;
-import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.transaction.annotation.Transactional;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @MockMvcTest
-class StudySettingsControllerTest{
+class StudySettingsControllerTest {
 
     @Autowired MockMvc mockMvc;
     @Autowired AccountFactory accountFactory;

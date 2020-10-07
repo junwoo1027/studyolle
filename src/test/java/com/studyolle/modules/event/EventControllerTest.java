@@ -6,7 +6,6 @@ import com.studyolle.modules.account.AccountRepository;
 import com.studyolle.modules.account.WithAccount;
 import com.studyolle.modules.account.Account;
 import com.studyolle.modules.study.Study;
-import com.studyolle.modules.study.StudyControllerTest;
 import com.studyolle.modules.study.StudyFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

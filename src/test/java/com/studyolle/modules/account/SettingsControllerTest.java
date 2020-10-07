@@ -2,10 +2,6 @@ package com.studyolle.modules.account;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.studyolle.infra.MockMvcTest;
-import com.studyolle.modules.account.WithAccount;
-import com.studyolle.modules.account.AccountRepository;
-import com.studyolle.modules.account.AccountService;
-import com.studyolle.modules.account.Account;
 import com.studyolle.modules.tag.Tag;
 import com.studyolle.modules.zone.Zone;
 import com.studyolle.modules.tag.TagForm;
@@ -17,12 +13,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
