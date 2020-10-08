@@ -1,10 +1,11 @@
 package com.studyolle.modules.main;
 
 import com.studyolle.modules.account.Account;
+import com.studyolle.modules.account.AccountRepository;
 import com.studyolle.modules.account.CurrentUser;
+import com.studyolle.modules.event.EnrollmentRepository;
 import com.studyolle.modules.study.Study;
 import com.studyolle.modules.study.StudyRepository;
-import com.studyolle.modules.study.StudyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,15 +22,27 @@ import java.util.List;
 public class MainController {
 
     private final StudyRepository studyRepository;
-    private final StudyService studyService;
+    private final AccountRepository accountRepository;
+    private final EnrollmentRepository enrollmentRepository;
 
     @GetMapping("/")
     public String home(@CurrentUser Account account, Model model) {
         if (account != null) {
-            model.addAttribute(account);
+            Account accountLoaded = accountRepository.findAccountWithTagsAndZonesById(account.getId());
+            model.addAttribute(accountLoaded);
+            model.addAttribute("enrollmentList", enrollmentRepository.findByAccountAndAcceptedOrderByEnrolledAtDesc(account, true));
+            model.addAttribute("studyList", studyRepository.findByAccount(
+                    accountLoaded.getTags(),
+                    accountLoaded.getZones()
+            ));
+            model.addAttribute("studyManagerOf",
+                    studyRepository.findFirst5ByManagersContainingAndClosedOrderByPublishedDatetimeDesc(account, false));
+            model.addAttribute("studyMembersOf",
+                    studyRepository.findFirst5ByMembersContainingAndClosedOrderByPublishedDatetimeDesc(account, false));
+            return "index-after-login";
         }
-        model.addAttribute(studyRepository.findFirst9ByPublishedAndClosedOrderByPublishedDatetimeDesc(true, false));
 
+        model.addAttribute(studyRepository.findFirst9ByPublishedAndClosedOrderByPublishedDatetimeDesc(true, false));
         return "index";
     }
 
