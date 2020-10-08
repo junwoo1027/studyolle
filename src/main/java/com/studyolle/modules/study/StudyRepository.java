@@ -4,6 +4,8 @@ import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Transactional(readOnly = true)
 public interface StudyRepository extends JpaRepository<Study, Long>, StudyRepositoryExtension{
 
@@ -31,4 +33,6 @@ public interface StudyRepository extends JpaRepository<Study, Long>, StudyReposi
 
     @EntityGraph(attributePaths = {"managers", "members"})
     Study findStudyWithMangersAndMembersById(Long id);
+
+    List<Study> findFirst9ByPublishedAndClosedOrderByPublishedDatetimeDesc(boolean published, boolean closed);
 }
