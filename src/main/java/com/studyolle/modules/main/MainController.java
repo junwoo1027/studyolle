@@ -43,6 +43,8 @@ public class MainController {
         Page<Study> studyPage = studyRepository.findKeyword(keyword, pageable);
         model.addAttribute("studyPage", studyPage);
         model.addAttribute("keyword", keyword);
+        model.addAttribute("sortProperty",
+                pageable.getSort().toString().contains("publishedDatetime") ? "publishedDatetime" : "memberCount");
         return "study/search";
     }
 }
