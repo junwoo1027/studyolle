@@ -9,7 +9,7 @@
 - SpringBoot, Data JPA, Querydsl, Spring security, JQuery, Thymleaf, Querydsl, Bootstrap
 
 ### 주요기능
-- 회원 가입 / 로그인 / 로그아웃
+- 회원 가입 / 로그인 / 로그아웃 / 이메일 인증
 - 프로필 수정 (패스워드, 알림, 관심주제, 활동지역, 닉네임)
 - 스터디 관리
 - 모임 관리
