@@ -1,8 +1,7 @@
 ## 스프링과 JPA 기반 스터디 모임 관리 서비스
 
 ### 참고
-- 백기선님 강의 참고
-- [바로가기](https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81-JPA-%EC%9B%B9%EC%95%B1/dashboard)
+- 백기선님 강의 참고 [바로가기](https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81-JPA-%EC%9B%B9%EC%95%B1/dashboard)
 
 
 ### 개발환경
